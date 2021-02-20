@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="天氣預報">
+    <title>天氣預報</title>
+
+    <link rel="shortcut icon" type="image/x-icon" href="images/favicon-sun.ico">
+    <link rel="stylesheet" type="text/css" href="css/weather.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+      integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
+  </head>
+
+  <body>
+    <div class="weather" @mousemove="eyeMove($event)">
+      <div class="currentCity">
+        <div>
+          <h3>{{now.currentC}}</h3>
+          <h5>{{now.currentL}}</h5>
+        </div>
+      </div>
+
+      <main>
+        <section>
+          <div class="weatherWrap">
+            <div>
+              <img :src="now.info.weatherIMG" alt="">
+              <div class="eyes">
+                <span class="l"></span>
+                <span class="r"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="temperature">
+            <div id="currentT">
+              <span>{{now.info.t}}</span>
+
+              <div>
+                <button v-on:click="convertT(0)">˚C</button>
+                <hr>
+                <button v-on:click="convertT(1)">˚F</button>
+              </div>
+            </div>
+
+            <span id="weatherP">{{now.info.weatherP}}</span>
+          </div>
+        </section>
+
+        <section>
+          <div class="searchWrap">
+            <label for="search">
+              <input type="text" name="search" id="search" placeholder="地區搜尋..." v-model="searchBox"
+                @keypress.enter="searchL" @focus="isFocus=true" @blur="isFocus=false" @keydown="">
+            </label>
+
+            <button v-on:click="searchL">
+              <img src="images/searchIMG.svg" alt="" title="搜尋">
+            </button>
+
+            <div class="regions" v-show="isFocus">
+              <ul>
+                <li v-for="item in now.regionsList" @mousedown="clickLocal($event,item)">{{item}}</li>
+              </ul>
+            </div>
+          </div>
+
+
+          <div class="weatherInfo">
+            <ul>
+              <li>天氣現象:<span>{{now.info.wx}}</span></li>
+              <li>體感溫度:<span>{{now.info.at}}</span><i>˚C</i></li>
+              <li>紫外線:<span>{{now.info.uvi}}</span></li>
+              <li>濕度:<span>{{now.info.rh}}</span><i>%</i></li>
+              <li>降雨機率:<span>{{now.info.pop12h}}</span><i>%</i></li>
+              <li>風向:<span>{{now.info.wd}}</span></li>
+            </ul>
+          </div>
+        </section>
+      </main>
+
+      <nav>
+        <div class="logo">
+          <img src="images/sunIMG.svg" alt="logo">
+        </div>
+
+        <ul>
+          <li>
+            <a href="javascript:;">縣市</a>
+
+            <div class="city">
+              <ul>
+                <li @click="getURL('基隆市')">基隆市</li>
+                <li @click="getURL('新北市')">新北市</li>
+                <li @click="getURL('臺北市')">臺北市</li>
+                <li @click="getURL('桃園市')">桃園市</li>
+                <li @click="getURL('新竹縣')">新竹縣</li>
+                <li @click="getURL('新竹市')">新竹市</li>
+                <li @click="getURL('苗栗縣')">苗栗縣</li>
+                <li @click="getURL('臺中市')">臺中市</li>
+                <li @click="getURL('彰化縣')">彰化縣</li>
+                <li @click="getURL('南投縣')">南投縣</li>
+                <li @click="getURL('雲林縣')">雲林縣</li>
+                <li @click="getURL('嘉義市')">嘉義市</li>
+                <li @click="getURL('嘉義縣')">嘉義縣</li>
+                <li @click="getURL('臺南市')">臺南市</li>
+                <li @click="getURL('高雄市')">高雄市</li>
+                <li @click="getURL('屏東縣')">屏東縣</li>
+                <li @click="getURL('臺東縣')">臺東縣</li>
+                <li @click="getURL('花蓮縣')">花蓮縣</li>
+                <li @click="getURL('宜蘭縣')">宜蘭縣</li>
+                <li @click="getURL('澎湖縣')">澎湖縣</li>
+                <li @click="getURL('金門縣')">金門縣</li>
+                <li @click="getURL('連江縣')">連江縣</li>
+              </ul>
+            </div>
+          </li>
+          <li><a href="">日曆</a></li>
+          <li><a href="">關於</a></li>
+          <li><a href="">未來</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="js/weatherInfo.js"></script>
+    <script src="js/weather.js"></script>
+  </body>
+
+</html>
