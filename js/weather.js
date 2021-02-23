@@ -56,6 +56,7 @@ const app = new Vue({
     //初始化
     init: function (data) {
       this.now.regionsList = [];
+      this.currentLNum = 0;
       this.weatherData = data;
 
       this.writeMsg();
@@ -63,7 +64,7 @@ const app = new Vue({
       $.each(data, (index, obj) => {
         this.now.regionsList.push(obj.location);
       });
-      console.log(this.now.regionsList)
+      //console.log(data);
     },
     //設置天氣資訊
     writeMsg(now = this.now.whichDay) {
@@ -78,7 +79,6 @@ const app = new Vue({
       this.now.info.rh = this.weatherData[this.currentLNum].rh[now];
       this.now.info.pop12h = this.weatherData[this.currentLNum].pop12h[now];
       this.now.info.wd = this.weatherData[this.currentLNum].wd[now];
-      //console.log(this.now.info);
     },
     //判斷晴、陰、雨、雪天
     wxLite(whichData) {
