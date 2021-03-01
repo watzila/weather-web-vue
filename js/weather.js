@@ -2,6 +2,7 @@ const app = new Vue({
   el: ".weather",
   data: {
     weatherData: [],//獲得的所有資料
+    futureData: [],
     currentLNum: 0,//當前地區的陣列索引
     now: {
       currentC: "", //當前城市
@@ -79,6 +80,8 @@ const app = new Vue({
       this.now.info.rh = this.weatherData[this.currentLNum].rh[now];
       this.now.info.pop12h = this.weatherData[this.currentLNum].pop12h[now];
       this.now.info.wd = this.weatherData[this.currentLNum].wd[now];
+
+      this.getFuture();
     },
     //判斷晴、陰、雨、雪天
     wxLite(whichData) {
@@ -116,6 +119,19 @@ const app = new Vue({
           this.now.info.weatherIMG = "images/rainIMG.svg";
           break;
       }
+    },
+    //取得未來天氣狀況
+    getFuture() {
+      let wxV = this.weatherData[this.currentLNum].wxV;
+      for (let i = 0; i < wxV.length; i++) {
+        let d = {
+          wxV: this.wxLite(wxV[i]),
+          day: 0
+        }
+
+        //this.futureData.push(d);
+      }
+      console.log(wxV)
     },
     //溫度換算
     convertT(index) {

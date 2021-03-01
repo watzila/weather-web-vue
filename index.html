@@ -122,9 +122,15 @@
           <li>
             <a href="">未來</a>
 
-            <div class="future" v-show="true">
+            <div class="future" v-show="false">
               <ul>
-                <li>123</li>
+                <li v-for="item in futureData">
+                  <div>
+                    <img src="images/sunIMG.svg" alt="">
+                  </div>
+
+                  <span>2/22</span>
+                </li>
               </ul>
             </div>
           </li>

@@ -19,13 +19,14 @@ class GetWeather {
 
   //整理各縣市的個別資料
   locationInfos(localWeathers) {
-    let infoLs2 = localWeathers["records"].locations[0].location;
+    let infoLs = localWeathers["records"].locations[0].location;
+    console.log(infoLs);
 
-    for (let i = 0; i < infoLs2.length; i++) {
-      let localW = infoLs2[i].weatherElement;
+    for (let i = 0; i < infoLs.length; i++) {
+      let localW = infoLs[i].weatherElement;
 
       let data2 = {
-        location: infoLs2[i].locationName,
+        location: infoLs[i].locationName,
         wx: this.getWeekWeather(localW[6]),
         wxV: this.getWeekWeather(localW[6], 3),
         t: this.getWeekWeather(localW[1]),
@@ -65,8 +66,11 @@ class GetWeather {
     switch (type) {
       case 1:
         for (let j = 0; j < whatInfo.time.length; j++) {
-          if (j % 2 == 0) {
-            let thisInfo = whatInfo.time[j].elementValue[0].value;
+          let thisInfo = whatInfo.time[j].elementValue[0].value;
+
+          if (j == 0) {
+            infosOK.push(thisInfo);
+          } else if (j % 2 != 0) {
             infosOK.push(thisInfo);
           } else {
             continue;
@@ -75,6 +79,9 @@ class GetWeather {
         break;
 
       case 2:
+        let nowInfo = whatInfo.time[0].elementValue[1].value;
+        infosOK.push(nowInfo);
+
         for (let j = 0; j < whatInfo.time.length; j++) {
           let thisInfo = whatInfo.time[j].elementValue[1].value;
           infosOK.push(thisInfo);
@@ -83,8 +90,11 @@ class GetWeather {
 
       case 3:
         for (let j = 0; j < whatInfo.time.length; j++) {
-          if (j % 2 == 0) {
-            let thisInfo = whatInfo.time[j].elementValue[1].value;
+          let thisInfo = whatInfo.time[j].elementValue[1].value;
+
+          if (j == 0) {
+            infosOK.push(thisInfo);
+          } else if (j % 2 != 0) {
             infosOK.push(thisInfo);
           } else {
             continue;
